@@ -27,17 +27,35 @@ const renderChart = () => {
   const option = {
     title: {
       text: 'Project Hours Distribution',
+      left: 'center',
     },
-    tooltip: {},
+    tooltip: {
+      trigger: 'axis',
+    },
     xAxis: {
+      type: 'category',
       data: props.data.map((item) => item.name),
+      axisLabel: {
+        interval: 0,
+        rotate: 30,
+      },
     },
-    yAxis: {},
+    yAxis: {
+      type: 'value',
+    },
     series: [
       {
         name: '工时',
         type: 'bar',
-        data: props.data.map((item) => item.value),
+        data: props.data.map((item, index) => ({
+          value: item.value,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: `rgba(58, 123, 255, ${1 - index * 0.1})` },
+              { offset: 1, color: `rgba(106, 172, 255, ${1 - index * 0.1})` },
+            ]),
+          },
+        })),
       },
     ],
   };

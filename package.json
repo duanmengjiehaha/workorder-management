@@ -19,7 +19,8 @@
     "vue-router": "^4.2.5",
     "ant-design-vue": "^4.0.0",
     "echarts": "^5.4.3",
-    "pinia": "^2.1.7"
+    "pinia": "^2.1.7",
+    "@ant-design/icons-vue": "^7.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.15.30",

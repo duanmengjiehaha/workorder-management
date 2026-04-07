@@ -1,20 +1,36 @@
 <template>
-  <div class="p-8">
+  <div class="p-8 bg-gray-50 min-h-full">
     <a-row :gutter="[16, 16]">
-      <a-col :span="24">
-        <a-card>
+      <a-col :xs="24" :lg="12">
+        <a-card class="shadow-lg rounded-lg">
           <Chart :data="ticketsStore.projectHours" />
         </a-card>
       </a-col>
-      <a-col :span="24">
-        <a-card title="工单列表">
-          <a-table :columns="columns" :data-source="ticketsStore.tickets" row-key="id">
+      <a-col :xs="24" :lg="12">
+        <a-card title="工单列表" class="shadow-lg rounded-lg">
+          <a-table :columns="columns" :data-source="ticketsStore.tickets" row-key="id" :scroll="{ x: true }">
             <template #bodyCell="{ column, record }">
               <template v-if="column.key === 'action' && userStore.role === 'admin'">
-                <a-button type="link" danger @click="() => ticketsStore.deleteTicket(record.id)">删除</a-button>
+                <a-popconfirm
+                  title="确定要删除这条工单吗？"
+                  ok-text="确定"
+                  cancel-text="取消"
+                  @confirm="() => ticketsStore.deleteTicket(record.id)"
+                >
+                  <a-button type="link" danger>
+                    <template #icon><DeleteOutlined /></template>
+                    删除
+                  </a-button>
+                </a-popconfirm>
               </template>
               <template v-if="column.key === 'overtime'">
-                <span>{{ record.overtime ? 'Yes' : 'No' }}</span>
+                <a-tag :color="record.overtime ? 'red' : 'green'" class="flex items-center">
+                  <template #icon>
+                    <ClockCircleOutlined v-if="record.overtime" />
+                    <CheckCircleOutlined v-else />
+                  </template>
+                  {{ record.overtime ? '是' : '否' }}
+                </a-tag>
               </template>
             </template>
           </a-table>
@@ -29,6 +45,7 @@ import { computed } from 'vue';
 import { useTicketsStore } from '../stores/tickets';
 import { useUserStore } from '../stores/user';
 import Chart from '../components/Chart.vue';
+import { ClockCircleOutlined, CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons-vue';
 
 const ticketsStore = useTicketsStore();
 const userStore = useUserStore();
