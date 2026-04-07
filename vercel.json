@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd trae && npm run build",
+  "outputDirectory": "trae/dist",
+  "rewrites": [
+    { "source": "/:path*", "destination": "/index.html" }
+  ]
+}
