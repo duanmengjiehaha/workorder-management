@@ -17,7 +17,7 @@
                   cancel-text="取消"
                   @confirm="() => ticketsStore.deleteTicket(record.id)"
                 >
-                  <a-button type="link" danger>
+                  <a-button type="link" danger class="flex items-center">
                     <template #icon><DeleteOutlined /></template>
                     删除
                   </a-button>
